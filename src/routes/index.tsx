@@ -98,6 +98,12 @@ export function Home({ formDefaults }: HomeProps = {}) {
           secondaryValue: name || "JOHN DOE",
           qrData: `SM|${(phoneNumber || "0712345678").replace(/\s/g, "")}`,
         };
+      case "POCHI_LA_BIASHARA":
+        return {
+          primaryValue: phoneNumber || "0712 345 678",
+          secondaryValue: name || "JOHN DOE",
+          qrData: `SM|${(phoneNumber || "0712345678").replace(/\s/g, "")}`,
+        };
       case "PAYBILL":
         return {
           primaryValue: formatBusinessNumber(paybillNumber || "123456"),
@@ -159,6 +165,8 @@ export function Home({ formDefaults }: HomeProps = {}) {
   const getPaymentTypeText = () => {
     switch (paymentType) {
       case "SEND_MONEY":
+        return "Phone Number";
+      case "POCHI_LA_BIASHARA":
         return "Phone Number";
       case "PAYBILL":
         return "Paybill";
@@ -262,7 +270,7 @@ export function Home({ formDefaults }: HomeProps = {}) {
                     }}
                     className="w-full"
                   >
-                    <TabsList className="grid w-full grid-cols-3 mb-3">
+                    <TabsList className="grid w-full grid-cols-4 mb-3">
                       <TabsTrigger
                         value="SEND_MONEY"
                         className="text-xs sm:text-sm"
@@ -281,7 +289,83 @@ export function Home({ formDefaults }: HomeProps = {}) {
                       >
                         Till Number
                       </TabsTrigger>
+                      <TabsTrigger
+                        value="POCHI_LA_BIASHARA"
+                        className="text-xs sm:text-sm"
+                      >
+                          Pochi
+                      </TabsTrigger>
                     </TabsList>
+
+                    <TabsContent value="POCHI_LA_BIASHARA" className="space-y-3">
+                      <form onSubmit={onSubmit} className="grid gap-3 md:grid-cols-2">
+                        <div>
+                          <label
+                            htmlFor="title"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
+                            Title Text
+                          </label>
+                          <Controller
+                            name="title"
+                            control={control}
+                            render={({ field }) => (
+                              <Input
+                                id="title"
+                                autoComplete="off"
+                                type="text"
+                                value={field.value}
+                                onChange={field.onChange}
+                                className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-base font-semibold"
+                                placeholder="SEND MONEY"
+                              />
+                            )}
+                          />
+                          {errors.title && (
+                            <p className="mt-1 text-sm text-red-500">
+                              {errors.title.message}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label
+                            htmlFor="phone"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
+                            Phone Number
+                          </label>
+                          <Controller
+                            name="phoneNumber"
+                            control={control}
+                            render={({ field }) => (
+                              <Input
+                                id="phone"
+                                type="text"
+                                autoComplete="off"
+                                value={field.value || ""}
+                                onChange={(e) => {
+                                  const value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
+                                  if (value.length <= 10) {
+                                    field.onChange(formatPhoneNumber(value));
+                                  }
+                                }}
+                                className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none text-base font-semibold"
+                                placeholder="0712 345 678"
+                              />
+                            )}
+                          />
+                          {errors.phoneNumber && (
+                            <p className="mt-1 text-sm text-red-500">
+                              {errors.phoneNumber.message}
+                            </p>
+                          )}
+                        </div>
+                      </form>
+                    </TabsContent>
 
                     <TabsContent value="SEND_MONEY" className="space-y-3">
                       <form onSubmit={onSubmit} className="grid gap-3 md:grid-cols-2">
@@ -568,7 +652,7 @@ export function Home({ formDefaults }: HomeProps = {}) {
                     <span>180%</span>
                   </div>
                 </div>
-                {paymentType === "SEND_MONEY" && (
+                {["SEND_MONEY", "POCHI_LA_BIASHARA"].includes(paymentType!) && (
                   <div className="flex items-center space-x-2 mb-2">
                     <Controller
                       name="showName"
@@ -592,7 +676,7 @@ export function Home({ formDefaults }: HomeProps = {}) {
                   </div>
                 )}
 
-                {paymentType === "SEND_MONEY" && showName && (
+                {["SEND_MONEY", "POCHI_LA_BIASHARA"].includes(paymentType!) && showName && (
                   <div>
                     <label
                       htmlFor="name"

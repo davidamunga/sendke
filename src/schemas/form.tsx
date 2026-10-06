@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const formSchema = z
   .object({
-    paymentType: z.enum(["SEND_MONEY", "PAYBILL", "TILL_NUMBER"]),
+    paymentType: z.enum(["SEND_MONEY", "PAYBILL", "TILL_NUMBER", "POCHI_LA_BIASHARA"]),
     phoneNumber: z.string().optional(),
     paybillNumber: z.string().optional(),
     accountNumber: z.string().optional(),
@@ -20,7 +20,7 @@ export const formSchema = z
   .refine(
     (data) => {
       // Validation based on payment type
-      if (data.paymentType === "SEND_MONEY") {
+      if (["SEND_MONEY", "POCHI_LA_BIASHARA"].includes(data.paymentType)) {
         if (
           !data.phoneNumber ||
           data.phoneNumber.replace(/\s/g, "").length < 10

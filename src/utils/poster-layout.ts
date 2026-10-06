@@ -94,7 +94,7 @@ export function getPosterLayout({
   const hasBusinessName = Boolean(businessName?.trim());
   const hasSecondaryField = paymentType === "PAYBILL";
   const hasNameInValue =
-    paymentType === "SEND_MONEY" && Boolean(showName);
+    ["SEND_MONEY", "POCHI_LA_BIASHARA"].includes(paymentType) && Boolean(showName);
 
   const shortSide = Math.min(width, height);
   const inset = Math.max(POSTER_BORDER_SIZE * 3, Math.round(shortSide * 0.03));

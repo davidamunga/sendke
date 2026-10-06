@@ -1,4 +1,4 @@
-export type PaymentType = "SEND_MONEY" | "PAYBILL" | "TILL_NUMBER";
+export type PaymentType = "SEND_MONEY" | "PAYBILL" | "TILL_NUMBER" | "POCHI_LA_BIASHARA";
 
 export interface PaymentForm {
   paymentType: PaymentType;
