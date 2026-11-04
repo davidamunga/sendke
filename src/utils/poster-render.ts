@@ -1,28 +1,9 @@
 import QRCode from "qrcode";
-import type { PaymentType } from "@/types/PaymentForm";
-import type { PosterSize } from "@/types/PosterSize";
 import { inkOn, POSTER_INK } from "@/utils/poster-ink";
 import { getPosterLayout, type Rect } from "@/utils/poster-layout";
 import { fitFontSize, wrapWords } from "@/utils/poster-text";
+import type { PosterRenderParams } from "@/types/RenderPoster";
 
-export interface DisplayValues {
-  primaryValue: string;
-  secondaryValue: string;
-  qrData: string;
-}
-
-export interface PosterRenderParams {
-  selectedSize: PosterSize;
-  selectedColor: string;
-  paymentType: PaymentType;
-  showName: boolean;
-  showQrCode: boolean;
-  title: string;
-  fontScale: number;
-  displayValues: DisplayValues;
-  businessName?: string;
-  brand?: "safaricom" | "airtel" | "equity" | "kcb" | "cooperative" | "ncba" | "kingdom"
-}
 
 const TITLE_FONT = "CalSans, 'Saira Condensed', sans-serif";
 const LABEL_FONT = "'Saira Condensed', sans-serif";
@@ -129,6 +110,7 @@ export const renderPosterToCanvas = async (
     fontScale,
     displayValues,
     businessName,
+    brand: businessBrand
   } = params;
 
   await ensurePosterFonts();

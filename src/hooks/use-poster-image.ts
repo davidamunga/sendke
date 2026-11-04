@@ -9,9 +9,9 @@ import {
   type ShareResult,
 } from "@/utils/poster-export";
 import {
-  renderPosterToCanvas,
-  type PosterRenderParams,
+  renderPosterToCanvas
 } from "@/utils/poster-render";
+import type { PosterRenderParams } from "@/types/RenderPoster";
 
 export function usePosterImage(params: PosterRenderParams) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
