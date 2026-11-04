@@ -12,6 +12,7 @@ import {
   renderPosterToCanvas
 } from "@/utils/poster-render";
 import type { PosterRenderParams } from "@/types/RenderPoster";
+import { renderPosterToSVG } from "@/utils/poster-render-svg";
 
 export function usePosterImage(params: PosterRenderParams) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -29,6 +30,9 @@ export function usePosterImage(params: PosterRenderParams) {
   }, []);
 
   const renderLatest = useCallback(async () => {
+    if(params.brand === 'safaricom'){
+      return await renderPosterToSVG(paramsRef.current);
+    }
     const canvas = await renderPosterToCanvas(paramsRef.current);
     return canvasToBlob(canvas);
   }, []);
