@@ -60,7 +60,7 @@ const buildPosterSVGElement = async (params: PosterRenderParams): Promise<SVGEle
 
   const titleText = (title || layout.copy.method).toUpperCase();
   const digits = (displayValues.primaryValue || "").replace(/\s/g, "");
-  const name = (displayValues.secondaryValue || "").trim();
+  const name = (displayValues.secondaryValue || businessName || "").trim();
 
   const doc = new DOMParser().parseFromString(TEMPLATE, "image/svg+xml");
   if (doc.querySelector("parsererror")) {
