@@ -9,9 +9,10 @@ import {
   type ShareResult,
 } from "@/utils/poster-export";
 import {
-  renderPosterToCanvas,
-  type PosterRenderParams,
+  renderPosterToCanvas
 } from "@/utils/poster-render";
+import type { PosterRenderParams } from "@/types/RenderPoster";
+import { renderPosterToSVG } from "@/utils/poster-render-svg";
 
 export function usePosterImage(params: PosterRenderParams) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -29,6 +30,10 @@ export function usePosterImage(params: PosterRenderParams) {
   }, []);
 
   const renderLatest = useCallback(async () => {
+    // TODO: Implement actual brand instead of using the color
+    if(paramsRef.current.selectedColor == "#16a34a"){
+      return await renderPosterToSVG(paramsRef.current);
+    }
     const canvas = await renderPosterToCanvas(paramsRef.current);
     return canvasToBlob(canvas);
   }, []);
