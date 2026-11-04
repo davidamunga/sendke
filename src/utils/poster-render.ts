@@ -21,6 +21,7 @@ export interface PosterRenderParams {
   fontScale: number;
   displayValues: DisplayValues;
   businessName?: string;
+  brand?: "safaricom" | "airtel" | "equity" | "kcb" | "cooperative" | "ncba" | "kingdom"
 }
 
 const TITLE_FONT = "CalSans, 'Saira Condensed', sans-serif";
